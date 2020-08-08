@@ -115,7 +115,7 @@ object BlockDrill: Block(Material.ANVIL), ITileEntityProvider {
 
         private fun mineBlock(pos: BlockPos){
             val state = world.getBlockState(pos)
-            if(pos.y <= 1) return
+            if(pos.y < 1) return
             else if(state.block.isAir(state, world, pos)) mineBlock(pos.down())
             else if(state.material.isLiquid) mineBlock(pos.down())
             else if(state.getBlockHardness(world, pos) < 0f) return
