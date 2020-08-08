@@ -1,0 +1,9 @@
+{   
+  "parent": "block/cube_bottom_top",
+  "textures": {
+      "particle": "drilldown:blocks/drill_side_on",
+      "bottom": "drilldown:blocks/drill_bottom",
+      "top": "drilldown:blocks/drill_top",
+      "side": "drilldown:blocks/drill_side_on"
+  }
+}

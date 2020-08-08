@@ -1,0 +1,7 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "on=false": { "model": "drilldown:drill_off" },
+    "on=true":  { "model": "drilldown:drill_on" }
+  }
+}
