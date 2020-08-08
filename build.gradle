@@ -13,7 +13,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: "kotlin"
 
-version = '0.1.0'
+version = '1.12.2-0.1.1'
 group = 'io.klebe.drilldown'
 archivesBaseName = 'Drilldown'
 
@@ -58,7 +58,7 @@ minecraft {
 processResources {
 	from (sourceSets.main.resources.srcDirs) {
 		include "mcmod.info"
-		expand "version": '0.1.0', "mcversion": '1.12.2'
+		expand "version": '0.1.1', "mcversion": '1.12.2'
 	}
 	from (sourceSets.main.resources.srcDirs) {
 		exclude "mcmod.info"
