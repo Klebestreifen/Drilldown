@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly
 open class CommonProxy{
     open fun preInit(e: FMLPreInitializationEvent) {
         Drilldown.log.info("preinit")
+        ConfigHandler.load(e)
     }
 
     open fun init(e: FMLInitializationEvent) {

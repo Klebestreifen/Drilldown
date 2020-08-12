@@ -1,5 +1,6 @@
 package io.klebe.drilldown.blocks
 
+import io.klebe.drilldown.ConfigHandler
 import io.klebe.drilldown.Drilldown
 import io.klebe.drilldown.forEach
 import net.minecraft.block.Block
@@ -93,7 +94,6 @@ object BlockDrill: Block(Material.ANVIL), ITileEntityProvider {
         companion object{
             const val INVENTORY_TAG_NAME = "Inventory"
             const val ENERGY_TAG_NAME = "Energy"
-            const val ENERGY_PER_OPERATION = 400
         }
 
 
@@ -157,25 +157,22 @@ object BlockDrill: Block(Material.ANVIL), ITileEntityProvider {
             }
         }
 
-        fun hasEnergyToWork() = energy.energyStored > ENERGY_PER_OPERATION
+        fun hasEnergyToWork() = energy.energyStored > ConfigHandler.energyUsage
 
         override fun update() {
-            if (!world.isRemote) {
-                if (hasEnergyToWork() && world.totalWorldTime % 20 == 0L) {
+            if (!world.isRemote && world.totalWorldTime % ConfigHandler.delay == 0L) {
+                if (hasEnergyToWork()) {
                     mineBlock()
-                    energy.energyStored -= ENERGY_PER_OPERATION
-                }
-                if (world.totalWorldTime % 20 == 2L) {
+                    energy.energyStored -= ConfigHandler.energyUsage
                     vacuum()
                 }
-                if (world.totalWorldTime % 20 == 0L) {
-                    if (hasEnergyToWork() && !world.getBlockState(pos).getValue(onProp!!)) {
-                        this.markDirty()
-                        world.setBlockState(pos, defaultState.withProperty(onProp, true))
-                    } else if (!hasEnergyToWork() && world.getBlockState(pos).getValue(onProp!!)) {
-                        this.markDirty()
-                        world.setBlockState(pos, defaultState.withProperty(onProp, false))
-                    }
+
+                if (hasEnergyToWork() && !world.getBlockState(pos).getValue(onProp!!)) {
+                    this.markDirty()
+                    world.setBlockState(pos, defaultState.withProperty(onProp, true))
+                } else if (!hasEnergyToWork() && world.getBlockState(pos).getValue(onProp!!)) {
+                    this.markDirty()
+                    world.setBlockState(pos, defaultState.withProperty(onProp, false))
                 }
             }
         }
@@ -216,7 +213,7 @@ object BlockDrill: Block(Material.ANVIL), ITileEntityProvider {
 
         override fun shouldRefresh(world: World?, pos: BlockPos?, oldState: IBlockState, newState: IBlockState) = oldState.block !== newState.block
 
-        class DrillEnergyStorage : EnergyStorage(10000){
+        class DrillEnergyStorage : EnergyStorage(ConfigHandler.energyCapacity){
             fun setEnergyStored(energy: Int){
                 this.energy = energy
             }
