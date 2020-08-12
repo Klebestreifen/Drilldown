@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger
 object Drilldown {
     const val MODID = "drilldown"
     const val NAME = "Drilldown"
-    const val VERSION = "0.1.0"
+    const val VERSION = "0.2.0"
     const val DEPENDENCIES = "required-after:forgelin@[1.8.4,);"
 
     private lateinit var logger: Logger
